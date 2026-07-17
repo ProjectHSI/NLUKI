@@ -35,7 +35,7 @@ int initLoopDevice() {
 		return -1;
 	}
 
-	unlink("/squashfs-loop")
+	unlink("/squashfs-loop");
 	if (mknod("/squashfs-loop", S_IFBLK | 0660, makedev(7, 15)) < 0 && errno != 17) {
 		printf("Could not create loop device. %i\n", errno);
 		return -1;
