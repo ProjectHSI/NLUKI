@@ -5,6 +5,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#include "globals.h"
+
 typedef enum {
 	MOUNT_CPIO_IN_INITRAMFS = 1
 } BOOT_METHOD;

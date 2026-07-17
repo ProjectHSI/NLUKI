@@ -4,6 +4,8 @@
 #include <sys/mount.h>
 #include <sys/stat.h>
 
+#include "globals.h"
+
 const char *tmpFsDir = "/jump-start/tmpfs";
 const char *upperMountDir = "/jump-start/tmpfs/upper";
 const char *workMountDir = "/jump-start/tmpfs/work";

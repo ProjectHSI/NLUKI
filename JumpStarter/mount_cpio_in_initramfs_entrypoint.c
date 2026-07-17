@@ -6,6 +6,8 @@
 #include <errno.h>
 #include <linux/loop.h>
 
+#include "globals.h"
+
 const char *jumpStartSquashFsFile = "/jump-start.squashfs";
 
 /*int allocateLoop() {
