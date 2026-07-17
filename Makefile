@@ -22,7 +22,7 @@ include $(MKFILE_DIR)/LSB.mak
 include $(MKFILE_DIR)/GLibC.mak
 include $(MKFILE_DIR)/KLibC.mak
 
-include $(MKFILE_DIR)/BareSysRoot.mak
+#include $(MKFILE_DIR)/BareSysRoot.mak
 
 include $(MKFILE_DIR)/SecondPassCrossCompiler.mak
 
