@@ -26,6 +26,7 @@ void exec(int argc, char *argv[], char *envp[]) {
 		return;
 	}
 
-	argv[0] = "/sbin/init";
+	//argv[0] = "/sbin/init";
+	argv[0] = "/usr/local/bin/bash";
 	execve(argv[0], argv, envp);
 }

@@ -2,6 +2,7 @@ $(NLUKI_BUILDROOT)/PrimarySysRoot:
 	touch -m $(NLUKI_BUILDROOT)/PrimarySysRoot
 
 $(NLUKI_BUILDROOT)/PrimarySysRoot.squashfs: $(NLUKI_BUILDROOT)/PrimarySysRoot
+	rm -fv $(NLUKI_BUILDROOT)/PrimarySysRoot.squashfs
 	mksquashfs $(NLUKI_BUILDROOT)/PrimarySysRoot $(NLUKI_BUILDROOT)/PrimarySysRoot.squashfs -comp xz \
 		-tailends -all-root -exit-on-error
 

@@ -54,7 +54,7 @@ int main(int argc, char *argv[], char *envp[]) {
 	}
 
 	if (!executeNlukiEntryPoint()) return 1;
-	if (!makeSquashFsRw()) while(1);return 1;
+	if (!makeSquashFsRw()) return 1;
 	exec(argc, argv, envp);
 
 	while(1);

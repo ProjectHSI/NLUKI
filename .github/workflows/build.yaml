@@ -13,11 +13,20 @@ jobs:
         arch: [x86_64]
 
     steps:
+    - name: Cache Dependencies
+      id: cache-dependencies
+      uses: actions/cache@v6
+      with:
+        path: Submodules
+        key: ${{ runner.os }}-submodules-cache
+
     - uses: actions/checkout@v7
+      name: Recursive Checkout
       with:
         submodules: 'recursive'
 
     - name: Download GCC Dependencies
+      if: steps.cache-dependencies.outputs.cache-hit != 'true'
       run: cd Submodules/gcc; ./contrib/download_prerequisites
     
     - uses: cachix/install-nix-action@v31

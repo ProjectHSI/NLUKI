@@ -16,3 +16,9 @@
 [submodule "Submodules/klibc"]
 	path = Submodules/klibc
 	url = https://git.kernel.org/pub/scm/libs/klibc/klibc.git
+[submodule "Submodules/systemd"]
+	path = Submodules/systemd
+	url = https://github.com/systemd/systemd.git
+[submodule "Submodules/coreutils"]
+	path = Submodules/coreutils
+	url = https://https.git.savannah.gnu.org/git/coreutils.git
