@@ -1,0 +1,26 @@
+name: Makefile CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        arch: [x86_64]
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: cachix/install-nix-action@v31
+
+    - name: Make
+      run: nix-shell --pure --run "make -L -j -k NLUKI_TARGET_ARCH=${{ matrix.arch }}"
+
+    #- name: Run check
+      #run: make check
+
+    #- name: Run distcheck
+      #run: make distcheck
