@@ -17,7 +17,7 @@ $(NLUKI_HOSTROOT)/host-gcc-build.sentinel: $(DEPENDS_ON_GCC) $(NLUKI_HOST_BUILDR
 	touch $(NLUKI_HOSTROOT)/host-gcc-build.sentinel
 
 # Configure Host GCC
-$(NLUKI_HOST_BUILDROOT)/gcc/Makefile: $(DEPENDS_ON_GCC) $(NLUKI_HOSTROOT)/host-libstdc++-install.sentinel $(NLUKI_HOSTROOT)/host-glibc-install.sentinel \
+$(NLUKI_HOST_BUILDROOT)/gcc/Makefile: $(DEPENDS_ON_GCC) $(NLUKI_HOSTROOT)/host-glibc-install.sentinel \
 									$(NLUKI_HOSTROOT)/host-fp-gcc-install.sentinel $(NLUKI_HOSTROOT)/host-binutils-install.sentinel
 	mkdir -p $(NLUKI_HOST_BUILDROOT)/gcc
 	mkdir -p $(NLUKI_HOST_SYSROOT)
@@ -36,15 +36,15 @@ $(NLUKI_HOST_BUILDROOT)/gcc/Makefile: $(DEPENDS_ON_GCC) $(NLUKI_HOSTROOT)/host-l
 #$(eval $(call NLUKI_MAKE_SYS_ROOT_HOST,gcc,glibc libstdc++ binutils fp-gcc,,))
 
 # Make libstdc++
-$(NLUKI_HOSTROOT)/host-libstdc++-install.sentinel: $(NLUKI_HOSTROOT)/host-libstdc++-build.sentinel
-	mkdir -p $(NLUKI_HOST_CLASSIC_SYSROOTS)/hostsysroot
-	cd $(NLUKI_HOST_BUILDROOT)/libstdc++; $(MAKE) install
-	touch $(NLUKI_HOSTROOT)/host-libstdc++-install.sentinel
+#$(NLUKI_HOSTROOT)/host-libstdc++-install.sentinel: $(NLUKI_HOSTROOT)/host-libstdc++-build.sentinel
+#	mkdir -p $(NLUKI_HOST_CLASSIC_SYSROOTS)/hostsysroot
+#	cd $(NLUKI_HOST_BUILDROOT)/libstdc++; $(MAKE) install
+#	touch $(NLUKI_HOSTROOT)/host-libstdc++-install.sentinel
 	
-$(NLUKI_HOSTROOT)/host-libstdc++-build.sentinel: $(NLUKI_HOST_BUILDROOT)/libstdc++/Makefile
-	$(NLUKI_DESTROY_BAD_ENV_VARS); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_CPATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_LIBRARY_PATH,hostsysroot); \
+#$(NLUKI_HOSTROOT)/host-libstdc++-build.sentinel: $(NLUKI_HOST_BUILDROOT)/libstdc++/Makefile
+#	$(NLUKI_DESTROY_BAD_ENV_VARS); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_CPATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_LIBRARY_PATH,hostsysroot); \
 	cd $(NLUKI_HOST_BUILDROOT)/libstdc++; $(MAKE)
-	touch $(NLUKI_HOSTROOT)/host-libstdc++-build.sentinel
+#	touch $(NLUKI_HOSTROOT)/host-libstdc++-build.sentinel
 
 # Configure libstdc++
 $(NLUKI_HOST_BUILDROOT)/libstdc++/Makefile: $(DEPENDS_ON_GCC) $(NLUKI_HOSTROOT)/host-glibc-install.sentinel
