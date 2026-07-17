@@ -13,3 +13,6 @@
 [submodule "Submodules/glibc"]
 	path = Submodules/glibc
 	url = https://sourceware.org/git/glibc.git
+[submodule "Submodules/klibc"]
+	path = Submodules/klibc
+	url = https://git.kernel.org/pub/scm/libs/klibc/klibc.git
