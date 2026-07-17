@@ -4,7 +4,7 @@ $(NLUKI_TARGET_SYSROOT_OVERLAYS)/JumpStarter: $(NLUKI_TARGET_BUILDROOT)/JumpStar
 	mkdir -p $(NLUKI_TARGET_SYSROOT_OVERLAYS)/JumpStarter/bin
 	cp -fv $(NLUKI_TARGET_BUILDROOT)/JumpStarter/jump_starter $(NLUKI_TARGET_SYSROOT_OVERLAYS)/JumpStarter/bin
 
-$(NLUKI_TARGET_BUILDROOT)/JumpStarter/jump_starter: $(NLUKI_BUILDROOT)/klibc-install.stamp $(NLUKI_BUILDROOT)/firstpass-gcc-install.stamp $(NLUKI_BUILDROOT)/binutils-install.stamp $(MKFILE_DIR)/JumpStarter/*.c
+$(NLUKI_TARGET_BUILDROOT)/JumpStarter/jump_starter: $(NLUKI_BUILDROOT)/klibc-install.stamp $(NLUKI_BUILDROOT)/firstpass-gcc-install.stamp $(NLUKI_BUILDROOT)/binutils-install.stamp $(MKFILE_DIR)/JumpStarter/*.c $(MKFILE_DIR)/JumpStarter/*.h
 	mkdir -p $(NLUKI_TARGET_BUILDROOT)/JumpStarter
 	mkdir -p $(NLUKI_TARGET_BUILDROOT)/JumpStarter
 	$(call NLUKI_AUTO_SYSROOT_OVERLAY_CPATH,klibc); $(call NLUKI_AUTO_TARGET_CLASSIC_SYSROOT_PATH,crosssysroot); \
