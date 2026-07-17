@@ -1,0 +1,10 @@
+nluki:
+	
+
+	with-glibc target gcc:
+		no-glibc target gcc:
+			isolating host gcc:
+			
+		target glibc:
+			no-glibc target gcc:
+				isolating host gcc
