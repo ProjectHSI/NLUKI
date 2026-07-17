@@ -23,7 +23,7 @@ $(NLUKI_BUILDROOT)/linux-build-kernel.stamp: $(NLUKI_BUILDROOT)/linux-configure-
 	touch $(NLUKI_BUILDROOT)/linux-build-kernel.stamp
 
 $(NLUKI_BUILDROOT)/linux-configure-kernel.stamp: | $(NLUKI_TARGET_BUILDROOT)/linux
-	$(NLUKI_KERNEL_ENV); cd $(NLUKI_TARGET_BUILDROOT)/linux; $(MKFILE_DIR)/Submodules/linux/scripts/config --set-str INITRAMFS_SOURCE "$(NLUKI_BUILDROOT)/JumpStarterSysRoot.cpio.xz"
+	cd $(NLUKI_TARGET_BUILDROOT)/linux; $(MKFILE_DIR)/Submodules/linux/scripts/config --set-str INITRAMFS_SOURCE "$(NLUKI_BUILDROOT)/JumpStarterSysRoot.cpio.xz"
 	touch $(NLUKI_BUILDROOT)/linux-configure-kernel.stamp
 
 $(NLUKI_BUILDROOT)/linux-install-modules.stamp: $(NLUKI_BUILDROOT)/linux-build-modules.stamp
