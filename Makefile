@@ -36,10 +36,10 @@ include $(MKFILE_DIR)/JumpStarter/Makefile
 include $(MKFILE_DIR)/JumpStarterSysRoot.mak
 
 # Download GCC Prerequisites
-$(GCC_PREREQS):	
-	cd $(MKFILE_DIR)/Submodules/gcc; contrib/download_prerequisites
+#$(GCC_PREREQS):	
+#	cd $(MKFILE_DIR)/Submodules/gcc; contrib/download_prerequisites
 	
-.NOTPARALLEL: $(GCC_PREREQS)
+#.NOTPARALLEL: $(GCC_PREREQS)
 
 ifneq ($(NLUKI_BYPASS_NIX_CHECK),yes)
 ifneq ($(IN_NIX_SHELL),pure)
