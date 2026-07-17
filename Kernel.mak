@@ -40,4 +40,4 @@ linux-build-modules: $(NLUKI_BUILDROOT)/linux-build-modules.stamp
 $(NLUKI_TARGET_BUILDROOT)/linux:
 	mkdir -p $(NLUKI_TARGET_BUILDROOT)/linux
 	cd $(MKFILE_DIR)/Submodules/linux; $(MAKE) O=$(NLUKI_TARGET_BUILDROOT)/linux ARCH=$(NLUKI_TARGET_ARCH) defconfig
-	cp -fv $(MKFILE_DIR)/KernelConfigs/$(NLUKI_TARGET_ARCH).config $(NLUKI_TARGET_BUILDROOT)/linux/KernelConfigs/.config
+	cp -fv $(MKFILE_DIR)/KernelConfigs/$(NLUKI_TARGET_ARCH).config $(NLUKI_TARGET_BUILDROOT)/linux/.config
