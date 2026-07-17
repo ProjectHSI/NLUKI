@@ -10,3 +10,6 @@
 [submodule "Submodules/bash"]
 	path = Submodules/bash
 	url = https://https.git.savannah.gnu.org/git/bash.git
+[submodule "Submodules/glibc"]
+	path = Submodules/glibc
+	url = https://sourceware.org/git/glibc.git
