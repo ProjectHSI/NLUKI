@@ -3,7 +3,7 @@
 	url = https://gcc.gnu.org/git/gcc.git
 [submodule "Submodules/binutils"]
 	path = Submodules/binutils
-	url = https://sourceware.org/git/binutils-gdb.git
+	url = https://forge.sourceware.org/binutils-gdb/binutils-gdb-mirror.git
 [submodule "Submodules/linux"]
 	path = Submodules/linux
 	url = https://github.com/torvalds/linux.git
