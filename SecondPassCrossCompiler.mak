@@ -11,6 +11,9 @@ $(NLUKI_BUILDROOT)/gcc-install.stamp: $(NLUKI_BUILDROOT)/gcc-build.stamp
 gcc-install: $(NLUKI_BUILDROOT)/gcc-install.stamp
 .PHONY: gcc-install
 
+nluki-cc: $(NLUKI_BUILDROOT)/gcc-install.stamp $(NLUKI_BUILDROOT)/glibc-install.stamp $(NLUKI_BUILDROOT)/binutils-install.stamp
+.PHONY : nluki-cc
+
 # Make Second Pass Target GCC
 $(NLUKI_BUILDROOT)/gcc-build.stamp: $(DEPENDS_ON_GCC) $(NLUKI_TARGET_BUILDROOT)/gcc/Makefile
 	$(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); $(call NLUKI_AUTO_TARGET_CLASSIC_SYSROOT_PATH,crosssysroot); \
