@@ -36,7 +36,7 @@ jobs:
         nix_path: nixpkgs=channel:nixos-26.05
 
     - name: Make
-      run: nix-shell --pure --run "make -L -j -k NLUKI_TARGET_ARCH=${{ matrix.arch }}"
+      run: nix-shell --pure --run "make -L -k NLUKI_TARGET_ARCH=${{ matrix.arch }}"
 
     #- name: Run check
       #run: make check
