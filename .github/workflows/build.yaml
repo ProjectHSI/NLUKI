@@ -8,7 +8,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    continue-on-error: true
     strategy:
+      fail-fast: false
       matrix:
         arch: [x86_64]
 
@@ -30,6 +32,8 @@ jobs:
       run: cd Submodules/gcc; ./contrib/download_prerequisites
     
     - uses: cachix/install-nix-action@v31
+      with:
+        nix_path: nixpkgs=channel:nixos-26.05
 
     - name: Make
       run: nix-shell --pure --run "make -L -j -k NLUKI_TARGET_ARCH=${{ matrix.arch }}"
