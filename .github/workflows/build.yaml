@@ -39,7 +39,7 @@ jobs:
       run: nix-shell --pure --run "make -L -j3 nluki-host NLUKI_TARGET_ARCH=${{ matrix.arch }}"
 
     - name: Make CC Tools
-      run: nix-shell --pure --run "make -L -j3 nluki-host NLUKI_TARGET_ARCH=${{ matrix.arch }}"
+      run: nix-shell --pure --run "make -L -j3 nluki-cc NLUKI_TARGET_ARCH=${{ matrix.arch }}"
 
     - name: Make
       run: nix-shell --pure --run "make -L -j3 NLUKI_TARGET_ARCH=${{ matrix.arch }}"
