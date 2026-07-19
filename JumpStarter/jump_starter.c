@@ -25,7 +25,7 @@ BOOT_METHOD determineNlukiEntryPoint() {
 bool executeNlukiEntryPoint() {
 	switch (determineNlukiEntryPoint()) {
 		case MOUNT_CPIO_IN_INITRAMFS:
-		printf("Booting from CPIO in initramfs...\n");
+			printf("Booting from CPIO in initramfs...\n");
 			doMountCpioInInitRamFsEntryPoint();
 			return true;
 		default:
@@ -42,21 +42,21 @@ int main(int argc, char *argv[], char *envp[]) {
 
 	if (getpid() != 1) {
 		printf("PID != 1, aborting.\n");
-		return 1;
+		return 0x1;
 		//while(1);
 	}
 
 	int mkdirRes = mkdir("/jump-start/", 0xFFFF);
 	if (mkdirRes < 0 && errno != 17) {
 		printf("Unable to create scratch space. %i\n", errno);
-		return 1;
+		return 0x2;
 		//while(1);
 	}
 
-	if (!executeNlukiEntryPoint()) return 1;
-	if (!makeSquashFsRw()) return 1;
+	if (!executeNlukiEntryPoint()) return 0x4;
+	if (!makeSquashFsRw()) return 0x8;
+
 	exec(argc, argv, envp);
 
-	while(1);
-	return 1;
+	return 0xF;
 }
