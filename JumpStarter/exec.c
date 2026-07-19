@@ -29,4 +29,6 @@ void exec(int argc, char *argv[], char *envp[]) {
 	//argv[0] = "/sbin/init";
 	argv[0] = "/usr/local/bin/bash";
 	execve(argv[0], argv, envp);
+
+	printf("Failed final exec. %i\n", errno);
 }
