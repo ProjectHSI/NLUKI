@@ -19,7 +19,8 @@ $(NLUKI_BUILDROOT)/bash-build.stamp: $(NLUKI_TARGET_BUILDROOT)/bash/Makefile
 bash-build: $(NLUKI_BUILDROOT)/bash-build.stamp
 .PHONY : bash-build
 
-$(NLUKI_TARGET_BUILDROOT)/bash/Makefile: $(NLUKI_BUILDROOT)/glibc-install.stamp $(NLUKI_BUILDROOT)/gcc-install.stamp $(NLUKI_BUILDROOT)/binutils-install.stamp
+$(NLUKI_TARGET_BUILDROOT)/bash/Makefile: $(NLUKI_BUILDROOT)/ncurses-install.stamp \
+										$(NLUKI_BUILDROOT)/glibc-install.stamp $(NLUKI_BUILDROOT)/gcc-install.stamp $(NLUKI_BUILDROOT)/binutils-install.stamp
 	mkdir -p $(NLUKI_TARGET_BUILDROOT)/bash
 	$(NLUKI_BASH_ENV); cd $(NLUKI_TARGET_BUILDROOT)/bash; $(MKFILE_DIR)/Submodules/bash/configure \
 		--enable-alias --enable-arith-for-command --enable-array-variables --enable-bang-history --enable-brace-expansion \
