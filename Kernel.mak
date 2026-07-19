@@ -18,19 +18,33 @@ $(NLUKI_BUILDROOT)/VMLinux-pre.efi $(NLUKI_BUILDROOT)/linux-install-kernel.stamp
 	cp -fv $(NLUKI_TARGET_BUILDROOT)/linux/arch/x86/boot/bzImage $(NLUKI_BUILDROOT)/VMLinux-pre.efi
 	touch $(NLUKI_BUILDROOT)/linux-install-kernel.stamp
 
+linux-install-kernel: $(NLUKI_BUILDROOT)/linux-install-kernel.stamp
+.PHONY: linux-install-kernel
+
 $(NLUKI_BUILDROOT)/linux-build-kernel.stamp: $(NLUKI_BUILDROOT)/linux-configure-kernel.stamp $(NLUKI_BUILDROOT)/JumpStarterSysRoot.cpio.xz $(NLUKI_BUILDROOT)/gcc-install.stamp $(NLUKI_BUILDROOT)/binutils-install.stamp $(NLUKI_BUILDROOT)/glibc-install.stamp | $(NLUKI_TARGET_BUILDROOT)/linux
 	$(NLUKI_KERNEL_ENV); cd $(NLUKI_TARGET_BUILDROOT)/linux; $(MAKE) ARCH=$(NLUKI_TARGET_ARCH) bzImage
 	touch $(NLUKI_BUILDROOT)/linux-build-kernel.stamp
+
+linux-build-kernel: $(NLUKI_BUILDROOT)/linux-build-kernel.stamp
+.PHONY: linux-build-kernel
 
 $(NLUKI_BUILDROOT)/linux-configure-kernel.stamp: | $(NLUKI_TARGET_BUILDROOT)/linux
 	cd $(NLUKI_TARGET_BUILDROOT)/linux; $(MKFILE_DIR)/Submodules/linux/scripts/config --set-str INITRAMFS_SOURCE "$(NLUKI_BUILDROOT)/JumpStarterSysRoot.cpio.xz"
 	touch $(NLUKI_BUILDROOT)/linux-configure-kernel.stamp
 
+linux-setup-config: $(NLUKI_BUILDROOT)/linux-configure-kernel.stamp
+.PHONY: linux-setup-config
+
 $(NLUKI_BUILDROOT)/linux-install-modules.stamp: $(NLUKI_BUILDROOT)/linux-build-modules.stamp
 	mkdir -p $(NLUKI_BUILDROOT)/PrimarySysRoot
 	$(NLUKI_KERNEL_ENV); cd $(NLUKI_TARGET_BUILDROOT)/linux; $(MAKE) ARCH=$(NLUKI_TARGET_ARCH) INSTALL_MOD_PATH="$(NLUKI_BUILDROOT)/PrimarySysRoot/usr" modules_install
 
-$(NLUKI_BUILDROOT)/linux-build-modules.stamp: $(NLUKI_TARGET_BUILDROOT)/linux $(NLUKI_TARGET_BUILDROOT)/linux $(NLUKI_BUILDROOT)/gcc-install.stamp $(NLUKI_BUILDROOT)/binutils-install.stamp $(NLUKI_BUILDROOT)/glibc-install.stamp
+$(NLUKI_PRIMARYSYSROOT): $(NLUKI_BUILDROOT)/linux-install-modules.stamp
+
+linux-install-modules: $(NLUKI_BUILDROOT)/linux-install-modules.stamp
+.PHONY: linux-install-modules
+
+$(NLUKI_BUILDROOT)/linux-build-modules.stamp: $(NLUKI_BUILDROOT)/linux-configure-kernel.stamp $(NLUKI_TARGET_BUILDROOT)/linux $(NLUKI_TARGET_BUILDROOT)/linux $(NLUKI_BUILDROOT)/gcc-install.stamp $(NLUKI_BUILDROOT)/binutils-install.stamp $(NLUKI_BUILDROOT)/glibc-install.stamp
 	$(NLUKI_KERNEL_ENV); cd $(NLUKI_TARGET_BUILDROOT)/linux; $(MAKE) ARCH=$(NLUKI_TARGET_ARCH) modules
 	touch $(NLUKI_BUILDROOT)/linux-build.stamp
 
