@@ -2,6 +2,8 @@ MKFILE := $(abspath $(lastword $(MAKEFILE_LIST)))
 MKFILE_DIR := $(dir $(MKFILE))
 PWD := $(shell pwd)
 
+NLUKI_COMING_FROM := Makefile
+
 include $(MKFILE_DIR)/Globals.mak
 
 $(NLUKI_BUILDROOT)/VMLinux.efi: $(NLUKI_BUILDROOT)/VMLinux-pre.efi
