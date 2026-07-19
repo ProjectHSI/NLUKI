@@ -53,6 +53,7 @@ pkgs.mkShell {
 		openssl_4_0
 		rsync
 		hostname
+    wget
 	];
 
 	NLUKI_INCLUDE_NIX_CPP_LIB = ''-isystem ${pkgs.gcc-unwrapped.out.outPath}/include/c++/15.2.0 -isystem ${pkgs.gcc-unwrapped.out.outPath}/include/c++/15.2.0/x86_64-unknown-linux-gnu/'';
