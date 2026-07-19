@@ -57,8 +57,7 @@ glibc-build: $(NLUKI_BUILDROOT)/glibc-build.stamp
 
 # Configure GLibC
 $(NLUKI_TARGET_BUILDROOT)/glibc/Makefile: $(NLUKI_BUILDROOT)/linux_headers-install.stamp $(NLUKI_BUILDROOT)/binutils-install.stamp $(NLUKI_BUILDROOT)/firstpass-gcc-install.stamp \
-									$(nluki-lsb-$(NLUKI_TARGET_ARCH)) \
-									| $(NLUKI_TARGET_BUILDROOT)/glibc/configparams
+									| $(nluki-lsb-$(NLUKI_TARGET_ARCH)) $(NLUKI_TARGET_BUILDROOT)/glibc/configparams
 	mkdir -p $(NLUKI_TARGET_BUILDROOT)/glibc
 	cd $(NLUKI_TARGET_BUILDROOT)/glibc; \
 	$(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); $(call NLUKI_AUTO_TARGET_CLASSIC_SYSROOT_PATH,fp); $(MKFILE_DIR)/Submodules/glibc/configure \
@@ -69,7 +68,6 @@ $(NLUKI_TARGET_BUILDROOT)/glibc/Makefile: $(NLUKI_BUILDROOT)/linux_headers-insta
 		--build=$(shell $(MKFILE_DIR)/Submodules/glibc/scripts/config.guess) \
 		--disable-nscd \
 		--with-headers=$(NLUKI_BUILDROOT)/PrimarySysRoot/usr/include/ \
-		libc_cv_slibdir=/usr/lib \
 		--prefix=/usr/
 		--disable-werror CFLAGS="-O3" CXXFLAGS="-O3"
 
