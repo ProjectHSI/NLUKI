@@ -15,6 +15,10 @@ jobs:
         arch: [x86_64]
 
     steps:
+    - uses: cachix/install-nix-action@v31
+      with:
+        nix_path: nixpkgs=channel:nixos-26.05
+    
     - name: Cache Dependencies
       id: cache-dependencies
       uses: actions/cache/restore@v6
@@ -44,10 +48,6 @@ jobs:
           Submodules
           Dependencies
         key: ${{ runner.os }}-submodules-cache
-    
-    - uses: cachix/install-nix-action@v31
-      with:
-        nix_path: nixpkgs=channel:nixos-26.05
 
     - name: Cache Host Tools
       id: cache-host-tools
