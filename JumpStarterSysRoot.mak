@@ -17,8 +17,8 @@ $(NLUKI_BUILDROOT)/JumpStarterSysRoot/dev/console:
 	fakeroot -i $(NLUKI_BUILDROOT)/JumpStarterSysRoot.fakeroot -s $(NLUKI_BUILDROOT)/JumpStarterSysRoot.fakeroot -- mknod -m 600 $(NLUKI_BUILDROOT)/JumpStarterSysRoot/dev/console c 5 1 
 
 $(NLUKI_BUILDROOT)/JumpStarterSysRoot/bin/jump_starter: $(NLUKI_TARGET_SYSROOT_OVERLAYS)/JumpStarter
-	mkdir -p $(NLUKI_TARGET_SYSROOT_OVERLAYS)/JumpStarter/bin
-	cp -rfv $(NLUKI_TARGET_SYSROOT_OVERLAYS)/JumpStarter/bin/jump_starter $(NLUKI_BUILDROOT)/JumpStarterSysRoot/bin/jump_starter
+	mkdir -p $(NLUKI_BUILDROOT)/JumpStarterSysRoot/bin
+	cp -fv $(NLUKI_TARGET_SYSROOT_OVERLAYS)/JumpStarter/bin/jump_starter $(NLUKI_BUILDROOT)/JumpStarterSysRoot/bin/jump_starter
 
 $(NLUKI_BUILDROOT)/JumpStarterSysRoot/init: $(NLUKI_BUILDROOT)/JumpStarterSysRoot/bin/jump_starter
 	ln -sfv /bin/jump_starter $(NLUKI_BUILDROOT)/JumpStarterSysRoot/init
