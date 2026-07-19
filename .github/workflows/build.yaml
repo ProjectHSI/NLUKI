@@ -17,9 +17,11 @@ jobs:
     steps:
     - name: Cache Dependencies
       id: cache-dependencies
-      uses: actions/cache@v6
+      uses: actions/cache/restore@v6
       with:
-        path: Submodules
+        path: |
+          Submodules
+          Dependencies
         key: ${{ runner.os }}-submodules-cache
 
     - uses: actions/checkout@v7
@@ -31,18 +33,75 @@ jobs:
       if: steps.cache-dependencies.outputs.cache-hit != 'true'
       run: cd Submodules/gcc; ./contrib/download_prerequisites
     
+    - name: Save Dependencies
+      id: save-dependencies
+      uses: actions/cache/save@v6
+      with:
+        path: |
+          Submodules
+          Dependencies
+        key: ${{ runner.os }}-submodules-cache
+    
     - uses: cachix/install-nix-action@v31
       with:
         nix_path: nixpkgs=channel:nixos-26.05
 
+    - name: Cache Host Tools
+      id: cache-host-tools
+      uses: actions/cache/restore@v6
+      with:
+        path: |
+          Build/Host
+        key: ${{ runner.os }}-host-tools-cache
+
     - name: Make Host Tools
       run: nix-shell --pure --run "make -L -j3 nluki-host NLUKI_TARGET_ARCH=${{ matrix.arch }}"
+    
+    - name: Save Host Tools
+      id: save-host-tools
+      uses: actions/cache/save@v6
+      with:
+        path: |
+          Build/Host
+        key: ${{ runner.os }}-host-tools-cache
+
+    - name: Cache CC Tools
+      id: cache-cc-tools
+      uses: actions/cache/restore@v6
+      with:
+        path: |
+          Build/${{ matrix.arch }}
+        key: ${{ runner.os }}-${{ matrix.arch }}-cc-tools-cache
 
     - name: Make CC Tools
       run: nix-shell --pure --run "make -L -j3 nluki-cc NLUKI_TARGET_ARCH=${{ matrix.arch }}"
 
+    - name: Save CC Tools
+      id: save-cc-tools
+      uses: actions/cache/save@v6
+      with:
+        path: |
+          Build/${{ matrix.arch }}
+        key: ${{ runner.os }}-${{ matrix.arch }}-cc-tools-cache
+
+    - name: Cache Build
+      id: cache-build
+      uses: actions/cache/restore@v6
+      with:
+        path: |
+          Build/${{ matrix.arch }}
+        key: ${{ runner.os }}-${{ matrix.arch }}-build-cache
+
     - name: Make
       run: nix-shell --pure --run "make -L -j3 NLUKI_TARGET_ARCH=${{ matrix.arch }}"
+    
+    - name: Save Build
+      id: save-build
+      uses: actions/cache/save@v6
+      with:
+        path: |
+          Build/${{ matrix.arch }}
+        key: ${{ runner.os }}-${{ matrix.arch }}-build-cache
 
     #- name: Run check
       #run: make check
