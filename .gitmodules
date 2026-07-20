@@ -22,3 +22,15 @@
 [submodule "Submodules/coreutils"]
 	path = Submodules/coreutils
 	url = https://https.git.savannah.gnu.org/git/coreutils.git
+[submodule "Submodules/dnf5"]
+	path = Submodules/dnf5
+	url = https://github.com/rpm-software-management/dnf5.git
+[submodule "Submodules/rpm"]
+	path = Submodules/rpm
+	url = https://github.com/rpm-software-management/rpm.git
+[submodule "Submodules/LuaJIT"]
+	path = Submodules/LuaJIT
+	url = https://github.com/LuaJIT/LuaJIT.git
+[submodule "Submodules/lua"]
+	path = Submodules/lua
+	url = https://github.com/lua/lua.git

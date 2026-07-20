@@ -18,15 +18,6 @@ jobs:
     - uses: cachix/install-nix-action@v31
       with:
         nix_path: nixpkgs=channel:nixos-26.05
-    
-    - name: Cache Dependencies
-      id: cache-dependencies
-      uses: actions/cache/restore@v6
-      with:
-        path: |
-          Submodules
-          Dependencies
-        key: ${{ runner.os }}-submodules-cache
 
     - uses: actions/checkout@v7
       name: Recursive Checkout
@@ -40,15 +31,6 @@ jobs:
     - name: Download Other Dependencies
       if: steps.cache-dependencies.outputs.cache-hit != 'true'
       run: nix-shell --pure --run "make -L -j3 -f Host.mak nluki-host-extra NLUKI_TARGET_ARCH=${{ matrix.arch }}"
-    
-    - name: Save Dependencies
-      id: save-dependencies
-      uses: actions/cache/save@v6
-      with:
-        path: |
-          Submodules
-          Dependencies
-        key: ${{ runner.os }}-submodules-cache
 
     - name: Cache Host Tools
       id: cache-host-tools
