@@ -40,4 +40,4 @@ $(MKFILE_DIR)/Dependencies/ncurses.tar.gz:
 ncurses-download: $(MKFILE_DIR)/Dependencies/ncurses
 .PHONY : ncurses-download
 
-NLUKI_TARGETS_TO_STILL_BUILD_AS_HOST += $(MKFILE_DIR)/Submodules/ncurses
+NLUKI_TARGETS_TO_STILL_BUILD_AS_HOST += $(MKFILE_DIR)/Dependencies/ncurses
