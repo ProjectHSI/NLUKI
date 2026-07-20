@@ -24,6 +24,7 @@ NLUKI_TARGETS_TO_STILL_BUILD_AS_HOST :=
 include Host.*.mak
 
 $(NLUKI_HOSTROOT)/nluki-host-extra.stamp:
+	mkdir -p $(NLUKI_HOSTROOT)/
 	touch $(NLUKI_HOSTROOT)/nluki-host-extra.stamp
 
 nluki-host-extra: $(NLUKI_HOSTROOT)/nluki-host-extra.stamp
