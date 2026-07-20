@@ -1,10 +1,10 @@
-ifeq ($(origin MKFILE_DIR), undefined)
+ifeq ($(origin MKFILE_DIR),undefined)
   MKFILE := $(abspath $(lastword $(MAKEFILE_LIST)))
   MKFILE_DIR := $(dir $(MKFILE))
   PWD := $(shell pwd)
 endif
 
-ifeq ($(origin NLUKI_COMING_FROM), undefined)
+ifeq ($(origin NLUKI_COMING_FROM),undefined)
   NLUKI_COMING_FROM := Host.mak
 endif
 
