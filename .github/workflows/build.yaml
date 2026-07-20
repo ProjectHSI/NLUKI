@@ -35,7 +35,7 @@ jobs:
 
     - name: Download GCC Dependencies
       if: steps.cache-dependencies.outputs.cache-hit != 'true'
-      run: cd Submodules/gcc; ./contrib/download_prerequisites
+      run: cd Submodules/gcc; ./contrib/download_prerequisites --isl
 
     - name: Download Other Dependencies
       run: nix-shell --pure --run "make -L -j3 -f Host.mak nluki-host-extra NLUKI_TARGET_ARCH=${{ matrix.arch }}"
