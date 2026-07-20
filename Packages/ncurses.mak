@@ -35,7 +35,7 @@ $(MKFILE_DIR)/Dependencies/ncurses: $(MKFILE_DIR)/Dependencies/ncurses.tar.gz
 
 $(MKFILE_DIR)/Dependencies/ncurses.tar.gz:
 	mkdir -p $(MKFILE_DIR)/Dependencies/
-	wget https://invisible-island.net/datafiles/current/ncurses.tar.gz -O $(MKFILE_DIR)/Dependencies/ncurses.tar.gz
+	wget https://invisible-island.net/datafiles/current/ncurses.tar.gz -O $(MKFILE_DIR)/Dependencies/ncurses.tar.gz --no-check-certificate
 
 ncurses-download: $(MKFILE_DIR)/Dependencies/ncurses
 .PHONY : ncurses-download
