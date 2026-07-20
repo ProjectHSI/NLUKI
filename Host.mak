@@ -26,6 +26,9 @@ include Host.*.mak
 $(NLUKI_HOSTROOT)/nluki-host-extra.stamp:
 	touch $(NLUKI_HOSTROOT)/nluki-host-extra.stamp
 
+nluki-host: $(NLUKI_HOSTROOT)/nluki-host-extra.stamp
+.PHONY : nluki-host-extra
+
 ifeq ($(NLUKI_COMING_FROM),Host.mak)
 include $(wildcard $(MKFILE_DIR)/Packages/**.mak)
 
