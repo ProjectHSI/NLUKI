@@ -34,3 +34,27 @@
 [submodule "Submodules/lua"]
 	path = Submodules/lua
 	url = https://github.com/lua/lua.git
+[submodule "Submodules/readline"]
+	path = Submodules/readline
+	url = https://https.git.savannah.gnu.org/git/readline.git
+[submodule "Submodules/zlib"]
+	path = Submodules/zlib
+	url = https://github.com/madler/zlib.git
+[submodule "Submodules/--depth=1"]
+	path = Submodules/--depth=1
+	url = https://sourceware.org/git/bzip2.git
+[submodule "Submodules/bzip2"]
+	path = Submodules/bzip2
+	url = https://sourceware.org/git/bzip2.git
+[submodule "Submodules/popt"]
+	path = Submodules/popt
+	url = https://github.com/rpm-software-management/popt.git
+[submodule "Submodules/zstd"]
+	path = Submodules/zstd
+	url = https://github.com/facebook/zstd.git
+[submodule "Submodules/libarchive"]
+	path = Submodules/libarchive
+	url = https://github.com/libarchive/libarchive.git
+[submodule "Submodules/file"]
+	path = Submodules/file
+	url = https://github.com/file/file.git
