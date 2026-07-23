@@ -29,8 +29,8 @@ $(NLUKI_HOST_BUILDROOT)/gcc/Makefile: $(DEPENDS_ON_GCC) $(NLUKI_HOSTROOT)/host-g
 		--disable-multilib \
 		--disable-nls --disable-libsanitizer \
 		--with-glibc-version=2.43 --enable-languages=c,c++ \
-		--with-native-system-header-dir=$(NLUKI_HOST_CLASSIC_SYSROOTS)/hostsysroot
-		--with-sysroot=$(NLUKI_HOST_CLASSIC_SYSROOTS)/hostsysroot
+		--with-native-system-header-dir=$(NLUKI_HOST_CLASSIC_SYSROOTS)/hostsysroot \
+		--with-sysroot=$(NLUKI_HOST_CLASSIC_SYSROOTS)/hostsysroot \
 		--disable-werror CFLAGS="-Wno-format-security -O3" CXXFLAGS="-Wno-format-security -O3"
 
 #$(eval $(call NLUKI_MAKE_SYS_ROOT_HOST,gcc,glibc libstdc++ binutils fp-gcc,,))
