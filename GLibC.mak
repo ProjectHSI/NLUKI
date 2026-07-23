@@ -67,8 +67,9 @@ $(NLUKI_TARGET_BUILDROOT)/glibc/Makefile: $(NLUKI_BUILDROOT)/linux_headers-insta
 		--host=$(NLUKI_TARGET_ARCH)-pc-linux \
 		--build=$(shell $(MKFILE_DIR)/Submodules/glibc/scripts/config.guess) \
 		--disable-nscd \
+		--enable-silent-rules \
 		--with-headers=$(NLUKI_BUILDROOT)/PrimarySysRoot/usr/include/ \
-		--prefix=/usr/
+		--prefix=/usr/ \
 		--disable-werror CFLAGS="-O3" CXXFLAGS="-O3"
 
 #$(eval $(call NLUKI_MAKE_SYS_ROOT_TARGET,glibc,linux_headers fp_gcc fp_binutils,,gcc binutils))
