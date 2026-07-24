@@ -14,7 +14,7 @@ $(NLUKI_PRIMARYSYSROOT): $(NLUKI_BUILDROOT)/zlib-install.stamp
 zlib-install: $(NLUKI_BUILDROOT)/zlib-install.stamp
 .PHONY : zlib-install
 
-$(NLUKI_BUILDROOT)/zlib-build.stamp: $(NLUKI_TARGET_BUILDROOT)/zlib/Makefile
+$(NLUKI_BUILDROOT)/zlib-build.stamp: $(NLUKI_BUILDROOT)/zlib-configure.stamp
 	@echo -e \\t[NLUKI] TARGET_CMAKE_BUILD zlib
 	@+$(NLUKI_ZLIB_ENV); export NLUKI_SYSROOT=$(NLUKI_PRIMARYSYSROOT); cd $(NLUKI_TARGET_BUILDROOT)/zlib; cmake --build .
 	@touch $(NLUKI_BUILDROOT)/zlib-build.stamp
@@ -31,6 +31,7 @@ $(NLUKI_BUILDROOT)/zlib-configure.stamp: $(MKFILE_DIR)/Submodules/zlib \
 		-DZLIB_BUILD_TESTING=OFF \
 		--toolchain $(MKFILE_DIR)/CrossToolchain.cmake
 	@echo -e \\t[NLUKI] TOUCH zlib-configure.stamp
+	@touch $(NLUKI_BUILDROOT)/zlib-configure.stamp
 
 zlib-configure: $(NLUKI_BUILDROOT)/zlib-configure.stamp
 .PHONY : zlib-configure

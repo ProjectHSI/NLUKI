@@ -58,3 +58,6 @@
 [submodule "Submodules/file"]
 	path = Submodules/file
 	url = https://github.com/file/file.git
+[submodule "Submodules/sqlite"]
+	path = Submodules/sqlite
+	url = https://github.com/sqlite/sqlite.git

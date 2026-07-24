@@ -49,7 +49,7 @@ glibc-install: $(NLUKI_BUILDROOT)/glibc-install.stamp
 
 # Make GLibC
 $(NLUKI_BUILDROOT)/glibc-build.stamp: $(NLUKI_TARGET_BUILDROOT)/glibc/Makefile
-	$(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); cd $(NLUKI_TARGET_BUILDROOT)/glibc; $(MAKE) CFLAGS="-O3" CXXFLAGS="-O3"
+	$(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); cd $(NLUKI_TARGET_BUILDROOT)/glibc; $(MAKE) V=0 CFLAGS="-O3" CXXFLAGS="-O3"
 	touch $(NLUKI_BUILDROOT)/glibc-build.stamp
 
 glibc-build: $(NLUKI_BUILDROOT)/glibc-build.stamp

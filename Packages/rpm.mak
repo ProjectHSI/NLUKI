@@ -9,7 +9,7 @@ $(NLUKI_BUILDROOT)/rpm-install.stamp: $(NLUKI_BUILDROOT)/rpm-build.stamp
 	@echo -e \\t[NLUKI] TOUCH rpm-install.stamp
 	@touch $(NLUKI_BUILDROOT)/rpm-install.stamp
 
-$(NLUKI_PRIMARYSYSROOT): $(NLUKI_BUILDROOT)/rpm-install.stamp
+#$(NLUKI_PRIMARYSYSROOT): $(NLUKI_BUILDROOT)/rpm-install.stamp
 
 rpm-install: $(NLUKI_BUILDROOT)/rpm-install.stamp
 .PHONY : rpm-install

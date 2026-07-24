@@ -23,5 +23,7 @@ $(NLUKI_TARGET_BUILDROOT)/readline/Makefile: $(NLUKI_BUILDROOT)/ncurses-install.
 										$(NLUKI_BUILDROOT)/glibc-install.stamp $(NLUKI_BUILDROOT)/gcc-install.stamp $(NLUKI_BUILDROOT)/binutils-install.stamp
 	mkdir -p $(NLUKI_TARGET_BUILDROOT)/readline
 	$(NLUKI_READLINE_ENV); cd $(NLUKI_TARGET_BUILDROOT)/readline; $(MKFILE_DIR)/Submodules/readline/configure \
+		--prefix=/usr \
+		--libdir=/usr/lib64 \
 		--enable-year2038 --enable-multibyte --disable-install-examples --enable-shared --enable-static --with-curses \
 		CFLAGS="-O3" CXXFLAGS="-O3"
