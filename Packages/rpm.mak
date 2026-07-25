@@ -9,7 +9,7 @@ $(NLUKI_BUILDROOT)/rpm-install.stamp: $(NLUKI_BUILDROOT)/rpm-build.stamp
 	@echo -e \\t[NLUKI] TOUCH rpm-install.stamp
 	@touch $(NLUKI_BUILDROOT)/rpm-install.stamp
 
-#$(NLUKI_PRIMARYSYSROOT): $(NLUKI_BUILDROOT)/rpm-install.stamp
+$(NLUKI_PRIMARYSYSROOT): $(NLUKI_BUILDROOT)/rpm-install.stamp
 
 rpm-install: $(NLUKI_BUILDROOT)/rpm-install.stamp
 .PHONY : rpm-install
@@ -29,7 +29,9 @@ $(NLUKI_BUILDROOT)/rpm-configure.stamp: $(MKFILE_DIR)/Submodules/rpm \
 										$(NLUKI_BUILDROOT)/popt-install.stamp \
 										$(NLUKI_BUILDROOT)/readline-install.stamp \
 										$(NLUKI_BUILDROOT)/zstd-install.stamp \
+										$(NLUKI_BUILDROOT)/sqlite-install.stamp \
 										$(NLUKI_BUILDROOT)/libarchive-install.stamp \
+										$(NLUKI_BUILDROOT)/cpython-install.stamp \
 										$(NLUKI_BUILDROOT)/glibc-install.stamp $(NLUKI_BUILDROOT)/gcc-install.stamp $(NLUKI_BUILDROOT)/binutils-install.stamp
 	@mkdir -p $(NLUKI_TARGET_BUILDROOT)/rpm
 	@echo -e \\tCMAKE_CONFIGURE rpm
