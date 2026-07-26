@@ -6,8 +6,8 @@ $(NLUKI_HOSTROOT)/host-cpython-install.stamp: $(NLUKI_HOSTROOT)/host-cpython-bui
 	@echo -e \\t[NLUKI] TOUCH host-cpython-install.stamp
 	@touch $(NLUKI_HOSTROOT)/host-cpython-install.stamp
 
-cpython-install: $(NLUKI_HOSTROOT)/cpython-install.stamp
-.PHONY : cpython-install
+host-cpython-install: $(NLUKI_HOSTROOT)/cpython-install.stamp
+.PHONY : host-cpython-install
 
 $(NLUKI_HOSTROOT)/host-cpython-build.stamp: $(NLUKI_HOST_BUILDROOT)/cpython/Makefile
 	@echo -e \\t[NLUKI] HOST_MAKE cpython
@@ -15,8 +15,8 @@ $(NLUKI_HOSTROOT)/host-cpython-build.stamp: $(NLUKI_HOST_BUILDROOT)/cpython/Make
 	@echo -e \\t[NLUKI] TOUCH host-cpython-build.stamp
 	@touch $(NLUKI_HOSTROOT)/host-cpython-build.stamp
 
-cpython-build: $(NLUKI_HOSTROOT)/cpython-build.stamp
-.PHONY : cpython-build
+host-cpython-build: $(NLUKI_HOSTROOT)/cpython-build.stamp
+.PHONY : host-cpython-build
 
 $(NLUKI_HOST_BUILDROOT)/cpython/Makefile: $(NLUKI_HOSTROOT)/host-glibc-install.sentinel $(NLUKI_HOSTROOT)/host-gcc-install.sentinel $(NLUKI_HOSTROOT)/host-binutils-install.sentinel
 	@echo -e \\t[NLUKI] MKDIR Host/Build/cpython
