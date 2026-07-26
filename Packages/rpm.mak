@@ -1,6 +1,6 @@
 NLUKI_RPM_ENV := $(NLUKI_AUTO_TARGET_PRIMARYSYSROOT_PATH); $(NLUKI_AUTO_TARGET_PRIMARYSYSROOT_LIBRARY_PATH); $(NLUKI_AUTO_TARGET_PRIMARYSYSROOT_CPATH) \
 	$(call NLUKI_AUTO_TARGET_CLASSIC_SYSROOT_LIBRARY_PATH,crosssysroot); $(call NLUKI_AUTO_TARGET_CLASSIC_SYSROOT_CPATH,crosssysroot); $(call NLUKI_AUTO_TARGET_CLASSIC_SYSROOT_PATH,crosssysroot); \
-	$(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); export NLUKI_SYSROOT=$(NLUKI_PRIMARYSYSROOT); export CC=$(NLUKI_ALTERNATIVE_TARGET_ARCH)-pc-linux-gcc; CXX=$(NLUKI_ALTERNATIVE_TARGET_ARCH)-pc-linux-g++
+	$(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); export NLUKI_SYSROOT=$(NLUKI_PRIMARYSYSROOT); export CC=$(NLUKI_GCC_ARCH)-pc-linux-gcc; CXX=$(NLUKI_GCC_ARCH)-pc-linux-g++
 
 $(NLUKI_BUILDROOT)/rpm-install.stamp: $(NLUKI_BUILDROOT)/rpm-build.stamp
 	@mkdir -p $(NLUKI_PRIMARYSYSROOT)
@@ -9,7 +9,7 @@ $(NLUKI_BUILDROOT)/rpm-install.stamp: $(NLUKI_BUILDROOT)/rpm-build.stamp
 	@echo -e \\t[NLUKI] TOUCH rpm-install.stamp
 	@touch $(NLUKI_BUILDROOT)/rpm-install.stamp
 
-$(NLUKI_PRIMARYSYSROOT): $(NLUKI_BUILDROOT)/rpm-install.stamp
+#$(NLUKI_PRIMARYSYSROOT): $(NLUKI_BUILDROOT)/rpm-install.stamp
 
 rpm-install: $(NLUKI_BUILDROOT)/rpm-install.stamp
 .PHONY : rpm-install
@@ -37,6 +37,20 @@ $(NLUKI_BUILDROOT)/rpm-configure.stamp: $(MKFILE_DIR)/Submodules/rpm \
 	@echo -e \\tCMAKE_CONFIGURE rpm
 	@$(NLUKI_RPM_ENV); cmake -B $(NLUKI_TARGET_BUILDROOT)/rpm -S $(MKFILE_DIR)/Submodules/rpm \
 		-DENABLE_SQLITE=YES \
+		-DWITH_CAP=NO \
+		-DWITH_ACL=NO \
+		-DWITH_SELINUX=NO \
+		-DWITH_DBUS=NO \
+		-DWITH_FSVERITY=NO \
+		-DWITH_AUDIT=NO \
+		-DWITH_IMAEVM=NO \
+		-DWITH_FAPOLICYD=NO \
+		-DWITH_SEQUOIA=NO \
+		-DWITH_OPENSSL=NO \
+		-DWITH_ICONV=NO \
+		-DWITH_LIBDW=NO \
+		-DWITH_LIBELF=NO \
+		-DWITH_LIBLZMA=NO \
 		--toolchain $(MKFILE_DIR)/CrossToolchain.cmake
 	@echo -e \\t[NLUKI] TOUCH rpm-configure.stamp
 	@touch $(NLUKI_BUILDROOT)/rpm-configure.stamp

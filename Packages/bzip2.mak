@@ -5,7 +5,7 @@ NLUKI_BZIP2_ENV := $(NLUKI_AUTO_TARGET_PRIMARYSYSROOT_PATH); $(NLUKI_AUTO_TARGET
 $(NLUKI_BUILDROOT)/bzip2-install.stamp: $(NLUKI_BUILDROOT)/bzip2-build.stamp
 	@mkdir -p $(NLUKI_PRIMARYSYSROOT)/usr
 	@echo -e \\t[NLUKI] TARGET_MAKE_INSTALL bzip2
-	@$(NLUKI_BZIP2_ENV); cd $(NLUKI_TARGET_BUILDROOT)/bzip2; $(MAKE) CC=$(NLUKI_ALTERNATIVE_TARGET_ARCH)-pc-linux-gcc CXX=$(NLUKI_ALTERNATIVE_TARGET_ARCH)-pc-linux-g++ PREFIX=$(NLUKI_PRIMARYSYSROOT)/usr install
+	@$(NLUKI_BZIP2_ENV); cd $(NLUKI_TARGET_BUILDROOT)/bzip2; $(MAKE) CC=$(NLUKI_GCC_ARCH)-pc-linux-gcc CXX=$(NLUKI_GCC_ARCH)-pc-linux-g++ PREFIX=$(NLUKI_PRIMARYSYSROOT)/usr install
 	@echo -e \\tTOUCH bzip2-install.stamp
 	@touch $(NLUKI_BUILDROOT)/bzip2-install.stamp
 
@@ -14,11 +14,11 @@ $(NLUKI_PRIMARYSYSROOT): $(NLUKI_BUILDROOT)/bzip2-install.stamp
 bzip2-install: $(NLUKI_BUILDROOT)/bzip2-install.stamp
 .PHONY : bzip2-install
 
-$(NLUKI_BUILDROOT)/bzip2-build.stamp: | $(NLUKI_TARGET_BUILDROOT)/bzip2
+$(NLUKI_BUILDROOT)/bzip2-build.stamp: $(NLUKI_BUILDROOT)/glibc-install.stamp $(NLUKI_BUILDROOT)/gcc-install.stamp $(NLUKI_BUILDROOT)/binutils-install.stamp | $(NLUKI_TARGET_BUILDROOT)/bzip2
 	@echo -e \\tDESCEND Target/BuildRoot/bzip2
 	@$(NLUKI_BZIP2_ENV); cd $(NLUKI_TARGET_BUILDROOT)/bzip2; $(MAKE) \
 		CFLAGS="-O3 -fPIC -D_FILE_OFFSET_BITS=64" \
-		CC=$(NLUKI_ALTERNATIVE_TARGET_ARCH)-pc-linux-gcc CXX=$(NLUKI_ALTERNATIVE_TARGET_ARCH)-pc-linux-g++
+		CC=$(NLUKI_GCC_ARCH)-pc-linux-gcc CXX=$(NLUKI_GCC_ARCH)-pc-linux-g++
 	@echo -e \\tTOUCH bzip2-build.stamp
 	@touch $(NLUKI_BUILDROOT)/bzip2-build.stamp
 

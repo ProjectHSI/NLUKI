@@ -27,7 +27,7 @@ lua-install: $(NLUKI_BUILDROOT)/lua-install.stamp
 
 $(NLUKI_BUILDROOT)/lua-build.stamp: | $(NLUKI_TARGET_BUILDROOT)/lua
 	@echo -e \\tDESCEND Target/BuildRoot/lua
-	@$(NLUKI_LUA_ENV); cd $(NLUKI_TARGET_BUILDROOT)/lua; $(MAKE) CC=$(NLUKI_ALTERNATIVE_TARGET_ARCH)-pc-linux-gcc CXX=$(NLUKI_ALTERNATIVE_TARGET_ARCH)-pc-linux-g++ MYLIBS="-ltinfo -lreadline -lncurses -lhistory"
+	@$(NLUKI_LUA_ENV); cd $(NLUKI_TARGET_BUILDROOT)/lua; $(MAKE) CC=$(NLUKI_GCC_ARCH)-pc-linux-gcc CXX=$(NLUKI_GCC_ARCH)-pc-linux-g++ MYLIBS="-ltinfo -lreadline -lncurses -lhistory"
 	@echo -e \\tTOUCH lua-build.stamp
 	@touch $(NLUKI_BUILDROOT)/lua-build.stamp
 
