@@ -1,7 +1,7 @@
 # Install Linux Kernel Headers
 $(NLUKI_BUILDROOT)/linux_headers-install.stamp: $(NLUKI_BUILDROOT)/linux_headers-build.stamp
 	mkdir -p $(NLUKI_BUILDROOT)/PrimarySysRoot/
-	cd $(MKFILE_DIR)/Submodules/linux; $(MAKE) O=$(NLUKI_TARGET_BUILDROOT)/linux_headers/ ARCH=$(NLUKI_TARGET_ARCH) INSTALL_HDR_PATH=$(NLUKI_BUILDROOT)/PrimarySysRoot/usr headers_install
+	cd $(MKFILE_DIR)/Submodules/linux; $(MAKE) O=$(NLUKI_TARGET_BUILDROOT)/linux_headers/ ARCH=$(NLUKI_KERNEL_ARCH) INSTALL_HDR_PATH=$(NLUKI_BUILDROOT)/PrimarySysRoot/usr headers_install
 	touch $(NLUKI_BUILDROOT)/linux_headers-install.stamp
 
 linux-headers-install: $(NLUKI_BUILDROOT)/linux_headers-install.stamp ;
@@ -10,7 +10,7 @@ linux-headers-install: $(NLUKI_BUILDROOT)/linux_headers-install.stamp ;
 # Make Linux Kernel Headers
 $(NLUKI_BUILDROOT)/linux_headers-build.stamp:
 	mkdir -p $(NLUKI_TARGET_BUILDROOT)/linux_headers/
-	cd $(MKFILE_DIR)/Submodules/linux; $(MAKE) O=$(NLUKI_TARGET_BUILDROOT)/linux_headers/ ARCH=$(NLUKI_TARGET_ARCH) headers
+	cd $(MKFILE_DIR)/Submodules/linux; $(MAKE) O=$(NLUKI_TARGET_BUILDROOT)/linux_headers/ ARCH=$(NLUKI_KERNEL_ARCH) headers
 	touch $(NLUKI_BUILDROOT)/linux_headers-build.stamp
 
 linux-headers-build: $(NLUKI_BUILDROOT)/linux_headers-build.stamp ;

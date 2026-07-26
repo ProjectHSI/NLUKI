@@ -2,7 +2,9 @@
 $(NLUKI_BUILDROOT)/firstpass-gcc-install.stamp: $(NLUKI_BUILDROOT)/firstpass-gcc-build.stamp
 	mkdir -p $(NLUKI_TARGET_CLASSIC_SYSROOTS)/crosssysroot
 	mkdir -p $(NLUKI_BUILDROOT)/PrimarySysRoot
-	$(call NLUKI_AUTO_TARGET_CLASSIC_SYSROOT_PATH,crosssysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); cd $(NLUKI_TARGET_BUILDROOT)/fp_gcc; $(MAKE) install
+	$(call NLUKI_AUTO_TARGET_CLASSIC_SYSROOT_PATH,crosssysroot); \
+	$(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_LIBRARY_PATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_CPATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); \
+	cd $(NLUKI_TARGET_BUILDROOT)/fp_gcc; $(MAKE) install
 	touch $(NLUKI_BUILDROOT)/firstpass-gcc-install.stamp
 
 firstpass-gcc-install: $(NLUKI_BUILDROOT)/firstpass-gcc-install.stamp
@@ -10,7 +12,9 @@ firstpass-gcc-install: $(NLUKI_BUILDROOT)/firstpass-gcc-install.stamp
 
 # --- Make First Pass Target GCC
 $(NLUKI_BUILDROOT)/firstpass-gcc-build.stamp: $(DEPENDS_ON_GCC) $(NLUKI_TARGET_BUILDROOT)/fp_gcc/Makefile
-	$(call NLUKI_AUTO_TARGET_CLASSIC_SYSROOT_PATH,crosssysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); cd $(NLUKI_TARGET_BUILDROOT)/fp_gcc; $(MAKE)
+	$(call NLUKI_AUTO_TARGET_CLASSIC_SYSROOT_PATH,crosssysroot); \
+	$(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_LIBRARY_PATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_CPATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); \
+	cd $(NLUKI_TARGET_BUILDROOT)/fp_gcc; $(MAKE)
 	touch $(NLUKI_BUILDROOT)/firstpass-gcc-build.stamp
 
 firstpass-gcc-build: $(NLUKI_BUILDROOT)/firstpass-gcc-build.stamp
@@ -24,10 +28,13 @@ firstpass-gcc-configure: $(NLUKI_TARGET_BUILDROOT)/fp_gcc/Makefile ;
 $(NLUKI_TARGET_BUILDROOT)/fp_gcc/Makefile: $(NLUKI_BUILDROOT)/binutils-install.stamp $(DEPENDS_ON_GCC)
 	mkdir -p $(NLUKI_TARGET_BUILDROOT)/fp_gcc
 	cd $(NLUKI_TARGET_BUILDROOT)/fp_gcc; \
-	$(call NLUKI_AUTO_TARGET_CLASSIC_SYSROOT_PATH,crosssysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); $(MKFILE_DIR)/Submodules/gcc/configure \
+	$(call NLUKI_AUTO_TARGET_CLASSIC_SYSROOT_PATH,crosssysroot); \
+	$(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_LIBRARY_PATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_CPATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); \
+	$(MKFILE_DIR)/Submodules/gcc/configure \
 		$(NLUKI_GCC_OPTIONS) \
+		--with-sysroot=$(NLUKI_TARGET_CLASSIC_SYSROOTS)/crosssysroot \
 		--prefix=$(NLUKI_TARGET_CLASSIC_SYSROOTS)/crosssysroot \
-		--target=$(NLUKI_TARGET_ARCH)-pc-linux \
+		--target=$(NLUKI_GCC_ARCH)-pc-linux \
 		--disable-multilib --disable-threads --disable-libatomic \
 		--disable-libgomp --disable-libquadmath \
 		--disable-libssp --disable-libvtv --disable-libstdcxx \
@@ -41,7 +48,8 @@ $(NLUKI_TARGET_BUILDROOT)/fp_gcc/Makefile: $(NLUKI_BUILDROOT)/binutils-install.s
 # --- Install Target Binutils
 $(NLUKI_BUILDROOT)/binutils-install.stamp: $(NLUKI_BUILDROOT)/binutils-build.stamp
 	mkdir -p $(NLUKI_TARGET_CLASSIC_SYSROOTS)/crosssysroot
-	$(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); cd $(NLUKI_TARGET_BUILDROOT)/binutils; $(MAKE) install
+	$(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_LIBRARY_PATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_CPATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); \
+	cd $(NLUKI_TARGET_BUILDROOT)/binutils; $(MAKE) install
 	touch $(NLUKI_BUILDROOT)/binutils-install.stamp
 
 binutils-install: $(NLUKI_BUILDROOT)/binutils-install.stamp
@@ -49,7 +57,8 @@ binutils-install: $(NLUKI_BUILDROOT)/binutils-install.stamp
 
 # --- Make Target Binutils
 $(NLUKI_BUILDROOT)/binutils-build.stamp: $(DEPENDS_ON_BINUTILS) $(NLUKI_TARGET_BUILDROOT)/binutils/Makefile
-	$(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); cd $(NLUKI_TARGET_BUILDROOT)/binutils; $(MAKE)
+	$(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_LIBRARY_PATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_CPATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); \
+	cd $(NLUKI_TARGET_BUILDROOT)/binutils; $(MAKE)
 	touch $(NLUKI_BUILDROOT)/binutils-build.stamp
 
 binutils-build: $(NLUKI_BUILDROOT)/binutils-build.stamp
@@ -63,9 +72,10 @@ binutils-configure: $(NLUKI_TARGET_BUILDROOT)/binutils/Makefile ;
 $(NLUKI_TARGET_BUILDROOT)/binutils/Makefile: $(DEPENDS_ON_BINUTILS) $(NLUKI_HOSTROOT)/nluki-host.stamp
 	mkdir -p $(NLUKI_TARGET_BUILDROOT)/binutils
 	cd $(NLUKI_TARGET_BUILDROOT)/binutils; \
-	$(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); $(MKFILE_DIR)/Submodules/binutils/configure \
+	$(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_LIBRARY_PATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_CPATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); \
+	$(MKFILE_DIR)/Submodules/binutils/configure \
 		$(NLUKI_BINUTILS_OPTIONS) \
-		--target=$(NLUKI_TARGET_ARCH)-pc-linux \
+		--target=$(NLUKI_GCC_ARCH)-pc-linux \
 		--prefix=$(NLUKI_TARGET_CLASSIC_SYSROOTS)/crosssysroot \
 		--disable-nls --enable-gprofng=no --enable-new-dtags \
 		--enable-default-hash-style=gnu --enable-shared --disable-werror \

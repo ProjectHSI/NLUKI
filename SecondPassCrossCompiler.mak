@@ -36,7 +36,7 @@ $(NLUKI_TARGET_BUILDROOT)/gcc/Makefile: $(DEPENDS_ON_BINUTILS) $(DEPENDS_ON_GCC)
 	$(MKFILE_DIR)/Submodules/gcc/configure \
 		$(NLUKI_GCC_OPTIONS) \
 		--prefix=$(NLUKI_TARGET_CLASSIC_SYSROOTS)/crosssysroot \
-		--target=$(NLUKI_TARGET_ARCH)-pc-linux \
+		--target=$(NLUKI_GCC_ARCH)-pc-linux \
 		--with-sysroot=$(NLUKI_BUILDROOT)/PrimarySysRoot \
 		--enable-default-pie --enable-default-ssp --disable-multilib \
 		--with-glibc-version=2.43 --enable-languages=c,c++ \

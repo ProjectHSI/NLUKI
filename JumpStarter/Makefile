@@ -9,7 +9,7 @@ $(NLUKI_TARGET_BUILDROOT)/JumpStarter/jump_starter: $(NLUKI_BUILDROOT)/klibc-ins
 	mkdir -p $(NLUKI_TARGET_BUILDROOT)/JumpStarter
 	$(call NLUKI_AUTO_SYSROOT_OVERLAY_CPATH,klibc); $(call NLUKI_AUTO_TARGET_CLASSIC_SYSROOT_PATH,crosssysroot); \
 	cd $(NLUKI_TARGET_BUILDROOT)/JumpStarter; \
-	$(NLUKI_TARGET_ARCH)-pc-linux-gcc -static -o $(NLUKI_TARGET_BUILDROOT)/JumpStarter/jump_starter $(MKFILE_DIR)/JumpStarter/jump_starter.c -v \
+	$(NLUKI_GCC_ARCH)-pc-linux-gcc -static -o $(NLUKI_TARGET_BUILDROOT)/JumpStarter/jump_starter $(MKFILE_DIR)/JumpStarter/jump_starter.c -v \
 	$(NLUKI_TARGET_SYSROOT_OVERLAYS)/klibc/usr/lib/klibc/lib/crt0.o $(NLUKI_TARGET_SYSROOT_OVERLAYS)/klibc/usr/lib/klibc/lib/libc.a \
 	-Xlinker --no-dynamic-linker -D__KLIBC__ -nostdlib -nostdinc -fno-stack-protector
 
