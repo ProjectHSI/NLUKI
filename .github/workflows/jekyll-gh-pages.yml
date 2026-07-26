@@ -31,7 +31,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Install Graphviz
-        run: sudo apt install dot
+        run: sudo apt-get install graphviz
       - name: Install Graph Creation Tool
         run: go install github.com/dnaeon/makefile-graph/cmd/makefile-graph@latest
       - name: Create Graph
