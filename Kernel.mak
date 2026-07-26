@@ -9,7 +9,7 @@ NLUKI_KERNEL_ENV := \
 	$(NLUKI_AUTO_TARGET_PRIMARYSYSROOT_PATH); $(NLUKI_AUTO_TARGET_PRIMARYSYSROOT_LIBRARY_PATH); $(NLUKI_AUTO_TARGET_PRIMARYSYSROOT_CPATH)
 
 configure-kernel: $(NLUKI_TARGET_BUILDROOT)/linux
-	cd $(NLUKI_TARGET_BUILDROOT)/linux; $(MAKE) ARCH=$(NLUKI_TARGET_ARCH) $(NLUKI_KERNEL_CONFIG_PREFIX)config
+	cd $(NLUKI_TARGET_BUILDROOT)/linux; $(MAKE) ARCH=$(NLUKI_KERNEL_ARCH) $(NLUKI_KERNEL_CONFIG_PREFIX)config
 .PHONY: configure-kernel
 
 $(NLUKI_BUILDROOT)/VMLinux-pre.efi $(NLUKI_BUILDROOT)/linux-install-kernel.stamp: $(NLUKI_BUILDROOT)/linux-build-kernel.stamp
@@ -23,7 +23,7 @@ linux-install-kernel: $(NLUKI_BUILDROOT)/linux-install-kernel.stamp
 
 $(NLUKI_BUILDROOT)/linux-build-kernel.stamp: $(NLUKI_BUILDROOT)/linux-early-build-kernel.stamp $(NLUKI_BUILDROOT)/linux-install-modules.stamp $(NLUKI_BUILDROOT)/linux-configure-kernel.stamp $(NLUKI_BUILDROOT)/JumpStarterSysRoot.cpio.xz $(NLUKI_BUILDROOT)/gcc-install.stamp $(NLUKI_BUILDROOT)/binutils-install.stamp $(NLUKI_BUILDROOT)/glibc-install.stamp | $(NLUKI_TARGET_BUILDROOT)/linux
 	cd $(NLUKI_TARGET_BUILDROOT)/linux; $(MKFILE_DIR)/Submodules/linux/scripts/config --set-str INITRAMFS_SOURCE "$(NLUKI_BUILDROOT)/JumpStarterSysRoot.cpio.xz"
-	$(NLUKI_KERNEL_ENV); cd $(NLUKI_TARGET_BUILDROOT)/linux; $(MAKE) ARCH=$(NLUKI_TARGET_ARCH) bzImage
+	$(NLUKI_KERNEL_ENV); cd $(NLUKI_TARGET_BUILDROOT)/linux; $(MAKE) ARCH=$(NLUKI_KERNEL_ARCH) bzImage
 	touch $(NLUKI_BUILDROOT)/linux-build-kernel.stamp
 
 linux-build-kernel: $(NLUKI_BUILDROOT)/linux-build-kernel.stamp
@@ -37,7 +37,7 @@ linux-setup-config: $(NLUKI_BUILDROOT)/linux-configure-kernel.stamp
 
 $(NLUKI_BUILDROOT)/linux-install-modules.stamp: $(NLUKI_BUILDROOT)/linux-build-modules.stamp
 	mkdir -p $(NLUKI_BUILDROOT)/PrimarySysRoot
-	$(NLUKI_KERNEL_ENV); cd $(NLUKI_TARGET_BUILDROOT)/linux; $(MAKE) ARCH=$(NLUKI_TARGET_ARCH) INSTALL_MOD_PATH="$(NLUKI_BUILDROOT)/PrimarySysRoot/usr" modules_install
+	$(NLUKI_KERNEL_ENV); cd $(NLUKI_TARGET_BUILDROOT)/linux; $(MAKE) ARCH=$(NLUKI_KERNEL_ARCH) INSTALL_MOD_PATH="$(NLUKI_BUILDROOT)/PrimarySysRoot/usr" modules_install
 	touch $(NLUKI_BUILDROOT)/linux-install-modules.stamp
 
 $(NLUKI_PRIMARYSYSROOT): $(NLUKI_BUILDROOT)/linux-install-modules.stamp
@@ -46,7 +46,7 @@ linux-install-modules: $(NLUKI_BUILDROOT)/linux-install-modules.stamp
 .PHONY: linux-install-modules
 
 $(NLUKI_BUILDROOT)/linux-build-modules.stamp: $(NLUKI_BUILDROOT)/linux-early-build-kernel.stamp $(NLUKI_BUILDROOT)/linux-configure-kernel.stamp $(NLUKI_BUILDROOT)/gcc-install.stamp $(NLUKI_BUILDROOT)/binutils-install.stamp $(NLUKI_BUILDROOT)/glibc-install.stamp | $(NLUKI_TARGET_BUILDROOT)/linux 
-	$(NLUKI_KERNEL_ENV); cd $(NLUKI_TARGET_BUILDROOT)/linux; $(MAKE) ARCH=$(NLUKI_TARGET_ARCH) modules
+	$(NLUKI_KERNEL_ENV); cd $(NLUKI_TARGET_BUILDROOT)/linux; $(MAKE) ARCH=$(NLUKI_KERNEL_ARCH) modules
 	touch $(NLUKI_BUILDROOT)/linux-build-modules.stamp
 
 linux-build-modules: $(NLUKI_BUILDROOT)/linux-build-modules.stamp
@@ -56,11 +56,11 @@ $(NLUKI_BUILDROOT)/linux-early-build-kernel.stamp: $(NLUKI_BUILDROOT)/linux-conf
 	#	TODO: Make comment for this
 	cd $(NLUKI_TARGET_BUILDROOT)/linux; $(MKFILE_DIR)/Submodules/linux/scripts/config --set-str INITRAMFS_SOURCE ""
 	@echo -e \\t[NLUKI] TARGET_MAKE vmlinux
-	@$(NLUKI_KERNEL_ENV); cd $(NLUKI_TARGET_BUILDROOT)/linux; $(MAKE) ARCH=$(NLUKI_TARGET_ARCH) vmlinux
+	@$(NLUKI_KERNEL_ENV); cd $(NLUKI_TARGET_BUILDROOT)/linux; $(MAKE) ARCH=$(NLUKI_KERNEL_ARCH) vmlinux
 	@echo -e \\t[NLUKI] TOUCH linux-early-build-kernel.stamp
 	@touch $(NLUKI_BUILDROOT)/linux-early-build-kernel.stamp
 
-$(NLUKI_TARGET_BUILDROOT)/linux: $(MKFILE_DIR)/KernelConfigs/$(NLUKI_TARGET_ARCH).config | $(MKFILE_DIR)/Submodules/linux
+$(NLUKI_TARGET_BUILDROOT)/linux:  | $(MKFILE_DIR)/Submodules/linux
 	mkdir -p $(NLUKI_TARGET_BUILDROOT)/linux
-	cd $(MKFILE_DIR)/Submodules/linux; $(MAKE) O=$(NLUKI_TARGET_BUILDROOT)/linux ARCH=$(NLUKI_TARGET_ARCH) defconfig
-	cp -fv $(MKFILE_DIR)/KernelConfigs/$(NLUKI_TARGET_ARCH).config $(NLUKI_TARGET_BUILDROOT)/linux/.config
+	cd $(MKFILE_DIR)/Submodules/linux; $(MAKE) O=$(NLUKI_TARGET_BUILDROOT)/linux ARCH=$(NLUKI_KERNEL_ARCH) defconfig
+#	cp -fv $(MKFILE_DIR)/KernelConfigs/$(NLUKI_TARGET_ARCH).config $(NLUKI_TARGET_BUILDROOT)/linux/.config
