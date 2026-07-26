@@ -1,8 +1,9 @@
 NLUKI_TARGET_ARCHS = x86_64
 
-include HostToolsBootstrap.mak
+nluki-host:
+	$(MAKE) -f Host.mak
 
-nluki-arch-%:
+nluki-arch-%: nluki-host
 	$(MAKE) $(NLUKI_TARGET) NLUKI_DISABLE_HOST_MAKEFILE_INC=yes NLUKI_TARGET_ARCH=$*
 
 nluki-multiarch: $(foreach current_arch,$(NLUKI_TARGET_ARCHS),nluki-arch-$(current_arch))
