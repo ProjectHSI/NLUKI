@@ -30,10 +30,12 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Install Graphviz
+        run: sudo apt install dot
       - name: Install Graph Creation Tool
         run: go install github.com/dnaeon/makefile-graph/cmd/makefile-graph@latest
       - name: Create Graph
-        run: makefile-graph --direction LR --target nluki-host --highlight | dot -Tsvg -o graph.svg
+        run: $HOME/go/bin/makefile-graph --direction LR --target nluki-host --highlight | dot -Tsvg -o graph.svg
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
