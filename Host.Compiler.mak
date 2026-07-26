@@ -7,11 +7,12 @@ HOST_GLIBC_FLAGS_EXPANDED := CFLAGS="$(HOST_GLIBC_FLAGS)" CXXFLAGS="$(HOST_GLIBC
 
 # Make Host GCC
 $(NLUKI_HOSTROOT)/host-gcc-install.sentinel: $(NLUKI_HOSTROOT)/host-gcc-build.sentinel
-	mkdir -p $(NLUKI_HOST_CLASSIC_SYSROOTS)/hostsysroot
+	mkdir -p $(NLUKI_HOST_CLASSIC_SYSROOTS)/hostsysroot/usr/include
 	cd $(NLUKI_HOST_BUILDROOT)/gcc; $(MAKE) install
 	touch $(NLUKI_HOSTROOT)/host-gcc-install.sentinel
 
 $(NLUKI_HOSTROOT)/host-gcc-build.sentinel: $(DEPENDS_ON_GCC) $(NLUKI_HOST_BUILDROOT)/gcc/Makefile
+	mkdir -p $(NLUKI_HOST_CLASSIC_SYSROOTS)/hostsysroot/usr/include
 	$(NLUKI_DESTROY_BAD_ENV_VARS); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_CPATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_LIBRARY_PATH,hostsysroot); \
 	cd $(NLUKI_HOST_BUILDROOT)/gcc; $(MAKE)
 	touch $(NLUKI_HOSTROOT)/host-gcc-build.sentinel
@@ -20,7 +21,6 @@ $(NLUKI_HOSTROOT)/host-gcc-build.sentinel: $(DEPENDS_ON_GCC) $(NLUKI_HOST_BUILDR
 $(NLUKI_HOST_BUILDROOT)/gcc/Makefile: $(DEPENDS_ON_GCC) $(NLUKI_HOSTROOT)/host-glibc-install.sentinel \
 									$(NLUKI_HOSTROOT)/host-fp-gcc-install.sentinel $(NLUKI_HOSTROOT)/host-binutils-install.sentinel
 	mkdir -p $(NLUKI_HOST_BUILDROOT)/gcc
-	mkdir -p $(NLUKI_HOST_SYSROOT)
 	cd $(NLUKI_HOST_BUILDROOT)/gcc; \
 	$(NLUKI_DESTROY_BAD_ENV_VARS); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_CPATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_LIBRARY_PATH,hostsysroot); \
 	$(MKFILE_DIR)/Submodules/gcc/configure \
@@ -29,9 +29,9 @@ $(NLUKI_HOST_BUILDROOT)/gcc/Makefile: $(DEPENDS_ON_GCC) $(NLUKI_HOSTROOT)/host-g
 		--disable-multilib \
 		--disable-nls --disable-libsanitizer \
 		--with-glibc-version=2.43 --enable-languages=c,c++ \
-		--with-native-system-header-dir=$(NLUKI_HOST_CLASSIC_SYSROOTS)/hostsysroot \
 		--with-sysroot=$(NLUKI_HOST_CLASSIC_SYSROOTS)/hostsysroot \
 		--disable-werror CFLAGS="-Wno-format-security -O3" CXXFLAGS="-Wno-format-security -O3"
+#		--with-native-system-header-dir=$(NLUKI_HOST_CLASSIC_SYSROOTS)/hostsysroot \
 
 #$(eval $(call NLUKI_MAKE_SYS_ROOT_HOST,gcc,glibc libstdc++ binutils fp-gcc,,))
 
