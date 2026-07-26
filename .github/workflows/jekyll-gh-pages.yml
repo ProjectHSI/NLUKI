@@ -35,7 +35,7 @@ jobs:
       - name: Install Graph Creation Tool
         run: go install github.com/dnaeon/makefile-graph/cmd/makefile-graph@latest
       - name: Create Graph
-        run: $HOME/go/bin/makefile-graph --direction LR --target nluki-host --highlight | dot -Tsvg -o graph.svg
+        run: $HOME/go/bin/makefile-graph --direction LR --target nluki-host --highlight | dot -Tsvg -o Site/graph.svg
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
