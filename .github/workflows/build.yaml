@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        arch: [x86_64]
+        arch: [x86_64, arm64]
 
     steps:
     - uses: cachix/install-nix-action@v31
