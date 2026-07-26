@@ -44,6 +44,8 @@ NLUKI_HOST_SYSROOTS := $(NLUKI_HOSTROOT)/SysRoots/
 NLUKI_TARGET_CLASSIC_SYSROOTS := $(NLUKI_BUILDROOT)/ClassicSysRoots/
 NLUKI_HOST_CLASSIC_SYSROOTS := $(NLUKI_HOSTROOT)/ClassicSysRoots/
 
+NLUKI_HOST_TRIPLET = $(shell $(NLUKI_HOST_CLASSIC_SYSROOTS)/hostsysroot/bin/gcc -dumpmachine)
+
 # Add some of these to the start of a command if bad env vars are ruining a build.
 
 # Makes sure Nix doesn't mess up a cross-compile.
