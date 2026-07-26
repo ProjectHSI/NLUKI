@@ -3,16 +3,23 @@ export NLUKI_TARGET_ARCH ?= x86_64
 # TODO: This won't work with a target arch of "Host".
 ifeq ($(NLUKI_TARGET_ARCH),x86_64)
 export NLUKI_TARGET_WORD_SIZE ?= 64
-export NLUKI_ALTERNATIVE_TARGET_ARCH := x86_64
+export NLUKI_KERNEL_ARCH := x86_64
+export NLUKI_GCC_ARCH := x86_64
+
+else ifeq ($(NLUKI_TARGET_ARCH),x86)
+export NLUKI_TARGET_WORD_SIZE ?= 32
+export NLUKI_KERNEL_ARCH := x86
+export NLUKI_GCC_ARCH := i686
+
 else ifeq ($(NLUKI_TARGET_ARCH),arm64)
 export NLUKI_TARGET_WORD_SIZE ?= 64
-export NLUKI_ALTERNATIVE_TARGET_ARCH ?= aarch64
-else ifeq ($(NLUKI_TARGET_ARCH),i386)
-export NLUKI_TARGET_WORD_SIZE ?= 32
-export NLUKI_ALTERNATIVE_TARGET_ARCH := i386
-else ifeq ($(NLUKI_TARGET_ARCH),i686)
-export NLUKI_TARGET_WORD_SIZE ?= 32
-export NLUKI_ALTERNATIVE_TARGET_ARCH := i686
+export NLUKI_KERNEL_ARCH := arm64
+export NLUKI_GCC_ARCH := aarch64
+
+else ifeq ($(NLUKI_TARGET_ARCH),arm)
+export NLUKI_TARGET_WORD_SIZE ?= 64
+export NLUKI_KERNEL_ARCH := arm64
+export NLUKI_GCC_ARCH := arm
 endif
 
 NLUKI_GCC_OPTIONS := --disable-bootstrap --enable-year2038
