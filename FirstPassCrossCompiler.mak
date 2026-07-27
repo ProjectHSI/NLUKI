@@ -2,8 +2,7 @@
 $(NLUKI_BUILDROOT)/firstpass-gcc-install.stamp: $(NLUKI_BUILDROOT)/firstpass-gcc-build.stamp
 	mkdir -p $(NLUKI_TARGET_CLASSIC_SYSROOTS)/crosssysroot
 	mkdir -p $(NLUKI_BUILDROOT)/PrimarySysRoot
-	$(call NLUKI_AUTO_TARGET_CLASSIC_SYSROOT_PATH,crosssysroot); \
-	$(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_LIBRARY_PATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_CPATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); \
+	export C_INCLUDE_PATH=""; export CPLUS_INCLUDE_PATH=""; $(call NLUKI_AUTO_TARGET_CLASSIC_SYSROOT_PATH,crosssysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); \
 	cd $(NLUKI_TARGET_BUILDROOT)/fp_gcc; $(MAKE) install
 	touch $(NLUKI_BUILDROOT)/firstpass-gcc-install.stamp
 
@@ -12,8 +11,7 @@ firstpass-gcc-install: $(NLUKI_BUILDROOT)/firstpass-gcc-install.stamp
 
 # --- Make First Pass Target GCC
 $(NLUKI_BUILDROOT)/firstpass-gcc-build.stamp: $(DEPENDS_ON_GCC) $(NLUKI_TARGET_BUILDROOT)/fp_gcc/Makefile
-	$(call NLUKI_AUTO_TARGET_CLASSIC_SYSROOT_PATH,crosssysroot); \
-	$(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_LIBRARY_PATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_CPATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); \
+	export C_INCLUDE_PATH=""; export CPLUS_INCLUDE_PATH=""; $(call NLUKI_AUTO_TARGET_CLASSIC_SYSROOT_PATH,crosssysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); \
 	cd $(NLUKI_TARGET_BUILDROOT)/fp_gcc; $(MAKE)
 	touch $(NLUKI_BUILDROOT)/firstpass-gcc-build.stamp
 
@@ -28,12 +26,11 @@ firstpass-gcc-configure: $(NLUKI_TARGET_BUILDROOT)/fp_gcc/Makefile ;
 $(NLUKI_TARGET_BUILDROOT)/fp_gcc/Makefile: $(NLUKI_BUILDROOT)/binutils-install.stamp $(DEPENDS_ON_GCC)
 	mkdir -p $(NLUKI_TARGET_BUILDROOT)/fp_gcc
 	cd $(NLUKI_TARGET_BUILDROOT)/fp_gcc; \
-	$(call NLUKI_AUTO_TARGET_CLASSIC_SYSROOT_PATH,crosssysroot); \
-	$(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_LIBRARY_PATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_CPATH,hostsysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); \
+	export C_INCLUDE_PATH=""; export CPLUS_INCLUDE_PATH=""; $(call NLUKI_AUTO_TARGET_CLASSIC_SYSROOT_PATH,crosssysroot); $(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); \
 	$(MKFILE_DIR)/Submodules/gcc/configure \
 		$(NLUKI_GCC_OPTIONS) \
 		--with-sysroot=$(NLUKI_TARGET_CLASSIC_SYSROOTS)/crosssysroot \
-		--prefix=$(NLUKI_TARGET_CLASSIC_SYSROOTS)/crosssysroot \
+		--prefix=$(NLUKI_TARGET_CLASSIC_SYSROOTS)/crosssysroot/usr \
 		--target=$(NLUKI_GCC_ARCH)-pc-linux \
 		--disable-multilib --disable-threads --disable-libatomic \
 		--disable-libgomp --disable-libquadmath \

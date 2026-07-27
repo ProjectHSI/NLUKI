@@ -24,5 +24,5 @@ $(NLUKI_HOST_BUILDROOT)/cpython/Makefile: $(NLUKI_HOSTROOT)/host-glibc-install.s
 	@echo -e \\t[NLUKI] HOST_CONFIGURE cpython
 #	Disabled optimisation for a time being, takes too long.
 	@$(NLUKI_HOST_CPYTHON_ENV); cd $(NLUKI_HOST_BUILDROOT)/cpython; $(MKFILE_DIR)/Submodules/cpython/configure \
-		--prefix=$(NLUKI_HOST_CLASSIC_SYSROOTS)/hostsysroot \
+		--prefix=$(NLUKI_HOST_CLASSIC_SYSROOTS)/hostsysroot/usr \
 		CFLAGS="-O3" CXXFLAGS="-O3"

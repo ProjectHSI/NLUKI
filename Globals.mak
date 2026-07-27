@@ -41,7 +41,9 @@ NLUKI_HOST_SYSROOTS := $(NLUKI_HOSTROOT)/SysRoots/
 NLUKI_TARGET_CLASSIC_SYSROOTS := $(NLUKI_BUILDROOT)/ClassicSysRoots/
 NLUKI_HOST_CLASSIC_SYSROOTS := $(NLUKI_HOSTROOT)/ClassicSysRoots/
 
-NLUKI_HOST_TRIPLET = $(shell $(NLUKI_HOST_CLASSIC_SYSROOTS)/hostsysroot/bin/gcc -dumpmachine)
+NLUKI_HOST_TRIPLET = $(shell $(NLUKI_HOST_CLASSIC_SYSROOTS)/hostsysroot/usr/bin/gcc -dumpmachine)
+
+NLUKI_QUICK_TARGET_COMPILER_ENV := export CC=$(NLUKI_GCC_ARCH)-pc-linux-gcc LD=$(NLUKI_GCC_ARCH)-pc-linux-ld OBJCOPY=$(NLUKI_GCC_ARCH)-pc-linux-objcopy READELF=$(NLUKI_GCC_ARCH)-pc-linux-readelf AR=$(NLUKI_GCC_ARCH)-pc-linux-ar OBJDUMP=$(NLUKI_GCC_ARCH)-pc-linux-objdump STRIP=$(NLUKI_GCC_ARCH)-pc-linux-strip NM=$(NLUKI_GCC_ARCH)-pc-linux-nm CXX=$(NLUKI_GCC_ARCH)-pc-linux-g++
 
 # Add some of these to the start of a command if bad env vars are ruining a build.
 

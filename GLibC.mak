@@ -1,9 +1,13 @@
 #GLIBC_COMPILER_FLAGS = "-Wno-error=attributes -Wno-error=unused-result -Wno-error=infinite-recursion -Wno-error=cpp -U_FORTIFY_SOURCE -O3"
 #CHECKED_GLIBC_COMPILER_FLAGS = "-Wno-error=attributes -Wno-error=unused-result -Wno-error=infinite-recursion -Wno-error=cpp -U_FORTIFY_SOURCE -O3"
 
+GLIBC_ENV = export C_INCLUDE_PATH=""; export CPLUS_INCLUDE_PATH=""; \
+	$(NLUKI_QUICK_TARGET_COMPILER_ENV); \
+	$(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); $(call NLUKI_AUTO_TARGET_CLASSIC_SYSROOT_PATH,crosssysroot)
+
 $(NLUKI_BUILDROOT)/glibc-install.stamp: $(NLUKI_BUILDROOT)/glibc-build.stamp
 	mkdir -p $(NLUKI_BUILDROOT)/PrimarySysRoot
-	$(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); cd $(NLUKI_TARGET_BUILDROOT)/glibc; $(MAKE) DESTDIR="$(NLUKI_BUILDROOT)/PrimarySysRoot" install
+	$(GLIBC_ENV); cd $(NLUKI_TARGET_BUILDROOT)/glibc; $(MAKE) DESTDIR="$(NLUKI_BUILDROOT)/PrimarySysRoot" install
 	touch $(NLUKI_BUILDROOT)/glibc-install.stamp
 
 $(NLUKI_PRIMARYSYSROOT): $(NLUKI_BUILDROOT)/glibc-install.stamp
@@ -13,7 +17,7 @@ glibc-install: $(NLUKI_BUILDROOT)/glibc-install.stamp
 
 # Make GLibC
 $(NLUKI_BUILDROOT)/glibc-build.stamp: $(NLUKI_TARGET_BUILDROOT)/glibc/Makefile
-	$(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); cd $(NLUKI_TARGET_BUILDROOT)/glibc; $(MAKE) V=0 CFLAGS="-O3" CXXFLAGS="-O3"
+	$(GLIBC_ENV); cd $(NLUKI_TARGET_BUILDROOT)/glibc; $(MAKE) V=0 CFLAGS="-O3" CXXFLAGS="-O3"
 	touch $(NLUKI_BUILDROOT)/glibc-build.stamp
 
 glibc-build: $(NLUKI_BUILDROOT)/glibc-build.stamp
@@ -24,7 +28,7 @@ $(NLUKI_TARGET_BUILDROOT)/glibc/Makefile: $(NLUKI_BUILDROOT)/linux_headers-insta
 									| $(nluki-lsb) $(NLUKI_TARGET_BUILDROOT)/glibc/configparams
 	mkdir -p $(NLUKI_TARGET_BUILDROOT)/glibc
 	cd $(NLUKI_TARGET_BUILDROOT)/glibc; \
-	$(call NLUKI_AUTO_HOST_CLASSIC_SYSROOT_PATH,hostsysroot); $(call NLUKI_AUTO_TARGET_CLASSIC_SYSROOT_PATH,fp); $(MKFILE_DIR)/Submodules/glibc/configure \
+	$(GLIBC_ENV); $(MKFILE_DIR)/Submodules/glibc/configure \
 		--enable-kernel=7.0 \
 		--with-build-sysroot=$(NLUKI_BUILDROOT)/PrimarySysRoot \
 		--enable-stack-protector=strong \
